@@ -1,0 +1,216 @@
+{
+  "type": "object",
+  "properties": {
+    "activities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "friendlyName": {
+            "type": "string"
+          },
+          "available": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "friendlyName",
+          "available"
+        ],
+        "additionalProperties": true
+      },
+      "default": []
+    },
+    "channels": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "friendlyName": {
+            "type": "string"
+          },
+          "uniqueName": {
+            "type": "string"
+          },
+          "channelOptimizedRouting": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "friendlyName",
+          "uniqueName"
+        ],
+        "additionalProperties": true
+      },
+      "default": []
+    },
+    "queues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "friendlyName": {
+            "type": "string"
+          },
+          "assignmentActivity": {
+            "type": "object",
+            "properties": {
+              "friendlyName": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "friendlyName"
+            ],
+            "additionalProperties": false
+          },
+          "reservationActivity": {
+            "$ref": "#/properties/queues/items/properties/assignmentActivity"
+          },
+          "maxReservedWorkers": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 1
+          },
+          "targetWorkers": {
+            "type": "string",
+            "default": "1==1"
+          },
+          "taskOrder": {
+            "type": "string",
+            "enum": [
+              "FIFO",
+              "LIFO"
+            ],
+            "default": "FIFO"
+          }
+        },
+        "required": [
+          "friendlyName"
+        ],
+        "additionalProperties": true
+      },
+      "default": []
+    },
+    "workflows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "friendlyName": {
+            "type": "string"
+          },
+          "assignmentCallbackUrl": {
+            "type": "string"
+          },
+          "fallbackAssignmentCallbackUrl": {
+            "type": "string"
+          },
+          "taskReservationTimeout": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 86400,
+            "default": 120
+          },
+          "configuration": {
+            "type": "object",
+            "properties": {
+              "task_routing": {
+                "type": "object",
+                "properties": {
+                  "filters": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "filter_friendly_name": {
+                          "type": "string"
+                        },
+                        "expression": {
+                          "type": "string"
+                        },
+                        "targets": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "queue": {
+                                "$ref": "#/properties/queues/items/properties/assignmentActivity"
+                              },
+                              "priority": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                              },
+                              "timeout": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                              },
+                              "expression": {
+                                "type": "string"
+                              },
+                              "known_worker_sid": {
+                                "type": "string"
+                              },
+                              "known_worker_friendly_name": {
+                                "type": "string"
+                              },
+                              "order_by": {
+                                "type": "string"
+                              },
+                              "skip_if": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "queue"
+                            ],
+                            "additionalProperties": true
+                          }
+                        }
+                      },
+                      "required": [
+                        "filter_friendly_name",
+                        "expression",
+                        "targets"
+                      ],
+                      "additionalProperties": true
+                    }
+                  },
+                  "default_filter": {
+                    "type": "object",
+                    "properties": {
+                      "queue": {
+                        "$ref": "#/properties/queues/items/properties/assignmentActivity"
+                      }
+                    },
+                    "required": [
+                      "queue"
+                    ],
+                    "additionalProperties": true
+                  }
+                },
+                "required": [
+                  "filters"
+                ],
+                "additionalProperties": true
+              }
+            },
+            "required": [
+              "task_routing"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "friendlyName",
+          "configuration"
+        ],
+        "additionalProperties": true
+      },
+      "default": []
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

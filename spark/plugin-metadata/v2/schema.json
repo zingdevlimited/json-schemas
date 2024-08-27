@@ -1,0 +1,204 @@
+{
+  "anyOf": [
+    {
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": "string"
+        },
+        "schema": {
+          "type": "string",
+          "const": "v1",
+          "default": "v1"
+        },
+        "build": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "deploy": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "displayName": {
+                "type": "string"
+              },
+              "workflow": {
+                "type": "string"
+              },
+              "dependsOn": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "dependsOnExternal": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "plugin": {
+                      "type": "string"
+                    },
+                    "workflow": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "plugin",
+                    "workflow"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "displayName",
+              "workflow",
+              "dependsOn"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "customVariables": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "var",
+                  "secret"
+                ]
+              },
+              "description": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              },
+              "prefixEnvironment": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "key",
+              "type",
+              "description",
+              "prefixEnvironment"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "dependencies": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "displayName",
+        "build",
+        "deploy"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": "string"
+        },
+        "schema": {
+          "type": "string",
+          "const": "v2"
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "schema": {
+                "type": "string",
+                "pattern": "^v"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "api",
+                  "flex-plugin",
+                  "flex-configuration",
+                  "taskrouter-configuration",
+                  "sync-configuration",
+                  "custom"
+                ]
+              }
+            },
+            "required": [
+              "path",
+              "schema",
+              "type"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "customVariables": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "var",
+                  "secret"
+                ]
+              },
+              "description": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              },
+              "prefixEnvironment": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "key",
+              "type",
+              "description"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "dependencies": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "displayName",
+        "schema",
+        "components"
+      ],
+      "additionalProperties": false
+    }
+  ],
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
