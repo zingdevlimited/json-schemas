@@ -1,6 +1,9 @@
 {
   "type": "object",
   "properties": {
+    "$schema": {
+      "type": "string"
+    },
     "plugins": {
       "type": "object",
       "additionalProperties": {
@@ -44,6 +47,9 @@
                       "additionalProperties": {
                         "type": "string"
                       }
+                    },
+                    "nodeVersion": {
+                      "type": "string"
                     }
                   },
                   "required": [
@@ -53,7 +59,8 @@
                     "hostingPlatform",
                     "buildCommand",
                     "projectDirectory",
-                    "envVars"
+                    "envVars",
+                    "nodeVersion"
                   ],
                   "additionalProperties": false
                 },
@@ -76,6 +83,9 @@
                     },
                     "projectDirectory": {
                       "type": "string"
+                    },
+                    "nodeVersion": {
+                      "type": "string"
                     }
                   },
                   "required": [
@@ -83,7 +93,8 @@
                     "schema",
                     "name",
                     "buildCommand",
-                    "projectDirectory"
+                    "projectDirectory",
+                    "nodeVersion"
                   ],
                   "additionalProperties": false
                 },
@@ -130,6 +141,9 @@
                       "const": "v1"
                     },
                     "name": {
+                      "type": "string"
+                    },
+                    "$schema": {
                       "type": "string"
                     },
                     "activities": {
@@ -361,6 +375,9 @@
                       "const": "v1"
                     },
                     "name": {
+                      "type": "string"
+                    },
+                    "$schema": {
                       "type": "string"
                     },
                     "documents": {
